@@ -96,7 +96,12 @@ function update(){
     score++;
     context.fillText(score, 10, 40); //coordinates of score position
 }
+const restartButton = document.getElementById("restartButton");
+ restartButton.addEventListener("click", restartGame);
 
+function restartGame() { 
+    location.reload();
+ }
 function moveChicken(e){
     //no longer moves the chicken
     if(gameOver){
