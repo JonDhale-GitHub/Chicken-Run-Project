@@ -1,0 +1,35 @@
+h1{
+    font-size: 80px;
+    color: white;
+}
+body{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;
+    background-image: url("Stardew Valley Wallpaper.png");
+    background-size: 50%;
+}
+th, tr{
+    font-size: 20px;
+    background-color: beige;
+    padding-top: 13px;
+    padding-bottom: 13px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 30px;
+}
+table{
+    border-spacing: 30px;
+}
+#center{
+    margin-left: auto;
+    margin-right: auto;
+}
+#board{
+    background-image: url("Stardew Valley Mountains.png");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    border-radius: 20px;
+    border-bottom: 20px solid khaki;
+    zoom: 150%;
+}
