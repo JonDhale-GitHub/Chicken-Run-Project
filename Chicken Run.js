@@ -37,6 +37,7 @@ let gravity = .4;
 
 let gameOver = false; //boolean
 let score = 0;
+let highScore = 0;
 //loads the variables on screen
 window.onload = function(){
     board = document.getElementById("board");
@@ -63,6 +64,7 @@ window.onload = function(){
     requestAnimationFrame(update);
     setInterval(placePlant, 1000); //1000 milliseconds = 1 second
     document.addEventListener("keydown", moveChicken)
+
 }
 
 function update(){
@@ -83,6 +85,10 @@ function update(){
         context.drawImage(plant.img, plant.x, plant.y, plant.width, plant.height);
     
         if(detectCollision(chicken, plant)){
+            if(score > highScore){//overwrite high score if score is greater
+                highScore = score + 1;
+            }
+            localStorage.setItem("highScore", highScore);//sets the high score
             gameOver = true;
             chickenImg.src = "./Chicken Run Assets/Chicken Run Game Over.png";
             chickenImg.onload = function(){
@@ -91,18 +97,26 @@ function update(){
         }
     }
     //score
+    loadHighScore();//loads highscore
     context.fillStyle="black";
-    context.font="30px sans-serif";
-    score++;
-    context.fillText(score, 10, 40); //coordinates of score position
+    context.font="15px sans-serif";
+    score ++;
+    context.fillText("High score: " + highScore + "  Score: " + score, 10, 30); //coordinates of score position
+    
+    function loadHighScore(){
+        if(localStorage.getItem("highScore") != null)
+        {
+            highScore = localStorage.getItem("highScore");
+        }
+    }
 }
-//Restart Button to restart game
+//restart button to restart game
 const restartButton = document.getElementById("restartButton");
- restartButton.addEventListener("click", restartGame);
+    restartButton.addEventListener("click", restartGame);
 
-function restartGame() { 
+function restartGame(){ 
     location.reload();
- }
+}
 function moveChicken(e){
     //no longer moves the chicken
     if(gameOver){
@@ -135,12 +149,12 @@ function placePlant(){
         plant.width = plant3Width;
         plantArray.push(plant);
     }
-    else if(placePlantChance > .70){ //30% you get plant 2
+    else if(placePlantChance > .70){ //30% you get cactus 2
         plant.img = plant2Img;
         plant.width = plant2Width;
         plantArray.push(plant);
     }
-    else if(placePlantChance > .50){ //50% you get plant 1
+    else if(placePlantChance > .50){ //50% you get cactus 1
         plant.img = plant1Img;
         plant.width = plant1Width;
         plantArray.push(plant);
