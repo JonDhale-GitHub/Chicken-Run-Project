@@ -96,6 +96,7 @@ function update(){
     score++;
     context.fillText(score, 10, 40); //coordinates of score position
 }
+//Restart Button to restart game
 const restartButton = document.getElementById("restartButton");
  restartButton.addEventListener("click", restartGame);
 
