@@ -135,12 +135,12 @@ function placePlant(){
         plant.width = plant3Width;
         plantArray.push(plant);
     }
-    else if(placePlantChance > .70){ //30% you get cactus 2
+    else if(placePlantChance > .70){ //30% you get plant 2
         plant.img = plant2Img;
         plant.width = plant2Width;
         plantArray.push(plant);
     }
-    else if(placePlantChance > .50){ //50% you get cactus 1
+    else if(placePlantChance > .50){ //50% you get plant 1
         plant.img = plant1Img;
         plant.width = plant1Width;
         plantArray.push(plant);
