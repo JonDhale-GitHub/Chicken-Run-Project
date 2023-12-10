@@ -1,27 +1,27 @@
-//board in the canvas
+//board 
 let board;
-let boardWidth = 750 ; //sizes of the board
+let boardWidth = 750 ; 
 let boardHeight = 300;
 let context;
-//chicken variables
-let chickenWidth = 88; //chicken image size in width
-let chickenHeight = 94; //chicken image size in height
-let chickenX = 50; //chicken image position in relation to X coordinates 
+//chicken 
+let chickenWidth = 88; 
+let chickenHeight = 94; 
+let chickenX = 50;  
 let chickenY = boardHeight - chickenHeight; 
 let chickenImg;
-//object properties
+
 let chicken = {
     x : chickenX,
     y : chickenY,
     width : chickenWidth,
     height : chickenHeight
 }
-//plant variables
+//plant 
 let plantArray = [];
 
-let plant1Width = 40; //sunflower
-let plant2Width = 73; //shrub
-let plant3Width = 99; //green bush
+let plant1Width = 40; 
+let plant2Width = 73; 
+let plant3Width = 99; 
 
 let plantHeight = 78;
 let plantX = 700; 
@@ -31,27 +31,27 @@ let plant1Img;
 let plant2Img;
 let plant3Img;
 //physics
-let velocityX = -8; //plant moving left speed
+let velocityX = -8; 
 let velocityY = 0;
 let gravity = .4;
 
-let gameOver = false; //boolean
+let gameOver = false; 
 let score = 0;
 let highScore = 0;
-//loads the variables on screen
+
 window.onload = function(){
     board = document.getElementById("board");
     board.height = boardHeight;
     board.width = boardWidth;
 
-    context = board.getContext("2d"); //used for drawing on the board
-    //loads the chicken image
+    context = board.getContext("2d"); 
+    
     chickenImg = new Image();
     chickenImg.src = "./Chicken Run Assets/Chicken Run.png";
     chickenImg.onload = function(){
         context.drawImage(chickenImg, chicken.x, chicken.y, chicken.width, chicken.height);
     }
-    //loads the plant images
+    
     plant1Img = new Image();
     plant1Img.src = "./Chicken Run Assets/Sunflower.png";
 
@@ -64,7 +64,6 @@ window.onload = function(){
     requestAnimationFrame(update);
     setInterval(placePlant, 1000); //1000 milliseconds = 1 second
     document.addEventListener("keydown", moveChicken)
-
 }
 
 function update(){
@@ -76,7 +75,7 @@ function update(){
     context.clearRect(0, 0, board.width, board.height);
     //chicken jump
     velocityY += gravity;
-    chicken.y = Math.min(chicken.y + velocityY, chickenY); //apply gravity to current chicken.y, making sure it doesn't exceed the ground
+    chicken.y = Math.min(chicken.y + velocityY, chickenY); 
     context.drawImage(chickenImg, chicken.x, chicken.y, chicken.width, chicken.height);
     //plant 
     for (let i= 0; i < plantArray.length; i++){
@@ -85,10 +84,10 @@ function update(){
         context.drawImage(plant.img, plant.x, plant.y, plant.width, plant.height);
     
         if(detectCollision(chicken, plant)){
-            if(score > highScore){//overwrite high score if score is greater
+            if(score > highScore){
                 highScore = score + 1;
             }
-            localStorage.setItem("highScore", highScore);//sets the high score
+            localStorage.setItem("highScore", highScore);
             gameOver = true;
             chickenImg.src = "./Chicken Run Assets/Chicken Run Game Over.png";
             chickenImg.onload = function(){
@@ -97,11 +96,11 @@ function update(){
         }
     }
     //score
-    loadHighScore();//loads highscore
+    loadHighScore();
     context.fillStyle="black";
     context.font="15px sans-serif";
     score ++;
-    context.fillText("High score: " + highScore + "  Score: " + score, 10, 30); //coordinates of score position
+    context.fillText("High score: " + highScore + "  Score: " + score, 10, 30); 
     
     function loadHighScore(){
         if(localStorage.getItem("highScore") != null)
@@ -110,30 +109,31 @@ function update(){
         }
     }
 }
-//restart button to restart game
+//restart 
 const restartButton = document.getElementById("restartButton");
     restartButton.addEventListener("click", restartGame);
 
 function restartGame(){ 
     location.reload();
 }
+
 function moveChicken(e){
-    //no longer moves the chicken
+    
     if(gameOver){
         return;
     }
-    //function to make the chicken jump
+    
     if((e.code == "Space" || e.code == "ArrowUp") && chicken.y == chickenY){
         //jump
         velocityY = -10;
     }
 }
 function placePlant(){
-    //no longer place plants
+    
     if(gameOver){
         return;
     }
-    //place plant
+   
     let plant = {
         img : null,
         x : plantX,
@@ -141,33 +141,33 @@ function placePlant(){
         width : null,
         height : plantHeight
     }
-    //randomizes the placing of plants
-    let placePlantChance = Math.random(); //0 - 0.9999...
-    //odds in placing plants
+    
+    let placePlantChance = Math.random(); 
+    
     if(placePlantChance > .90){ //10% you get plant 3
         plant.img = plant3Img;
         plant.width = plant3Width;
         plantArray.push(plant);
     }
-    else if(placePlantChance > .70){ //30% you get cactus 2
+    else if(placePlantChance > .70){ //30% you get plant 2
         plant.img = plant2Img;
         plant.width = plant2Width;
         plantArray.push(plant);
     }
-    else if(placePlantChance > .50){ //50% you get cactus 1
+    else if(placePlantChance > .50){ //50% you get plant 1
         plant.img = plant1Img;
         plant.width = plant1Width;
         plantArray.push(plant);
     }
-    //removes the plant images to save memory
+    //removes the plant 
     if(plantArray.length > 5){
-        plantArray.shift(); //remove the first element from the array so that the array doesn't constantly grow
+        plantArray.shift(); 
     }
 }
-//creates hit boxes
+//hit boxes
 function detectCollision(a, b){
-    return a.x < b.x + b.width &&   //a's top left corner doesn't reach b's top right corner
-           a.x + a.width > b.x &&   //a's top right corner passes b's top left corner
-           a.y < b.y + b.height &&  // a's top left corner doesn't reach b's bottom left corner
-           a.y + a.height > b.y;    //a's bottom left corner passes b's top left corner
+    return a.x < b.x + b.width &&   
+           a.x + a.width > b.x &&   
+           a.y < b.y + b.height &&  
+           a.y + a.height > b.y;    
 }
